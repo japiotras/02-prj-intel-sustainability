@@ -103,10 +103,16 @@ section .timeline-card:last-child {
   display: none;
   /* Position the paragraph absolutely over the card */
   position: absolute;
+  /* Remove any margin and border to prevent visible bars */
+  margin: 0;
+  border: none;
+  /* Make sure the overlay covers the whole card without gaps */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
   /* Add some padding so text isn't at the edge */
   padding: 24px 12px;
   /* Center the text vertically and horizontally */
@@ -123,6 +129,10 @@ section .timeline-card:last-child {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s;
+  /* Prevent text from overflowing the card */
+  box-sizing: border-box;
+  word-break: break-word;
+  overflow: auto;
 }
 
 /* When you hover over the card, dim it and show the paragraph */
@@ -138,7 +148,48 @@ section .timeline-card:last-child {
   pointer-events: auto;
 }
 
-p {
+/* Center images in timeline cards and prevent overflow */
+.timeline-card img {
+  /* Center the image horizontally */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /* Make the image fit the card width and not overflow */
+  width: 100%;
+  max-width: 100%;
+  height: 140px; /* Fixed height for consistency */
+  object-fit: cover; /* Crop the image to fill the area */
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+#scrollText {
   text-align: center;
   font-size: 1.5em;
+}
+
+/* On small screens, stack timeline cards vertically and hide the bottom paragraph */
+@media (max-width: 700px) {
+  section {
+    /* Stack cards vertically */
+    flex-direction: column;
+    align-items: center;
+    overflow-x: visible;
+    overflow-y: visible;
+  }
+  .timeline-card {
+    /* Make cards take full width with some margin */
+    width: 80vw;
+    flex: none;
+    margin: 16px 0;
+  }
+  section .timeline-card:first-child {
+    margin-left: 0px;
+  }
+  section .timeline-card:last-child {
+    margin-right: 0px;
+  }
+  #scrollText {
+    display: none;
+  }
 }
